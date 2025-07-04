@@ -18,11 +18,17 @@ class Reminders extends Controller {
         }
         header('Location: /reminders');
     }
-    public function edit() {
-        
+    public function edit($id) {
+        $R = $this->model('Reminder');
+        $reminder = $R->get_reminder($id);
+        $this->view('reminders/edit', ['reminder' => $reminder]);
     }
-    public function update() {
-        
+    public function update($id) {
+        $text = trim($_REQUEST['reminder'] ?? '');
+        $complete = isset($_REQUEST['complete']) ? 1 : 0;
+        $R = $this->model('Reminder');
+        $R->update_reminder($id, $text, $complete);
+        header('Location: /reminders');
     }
     public function delete(){
         
