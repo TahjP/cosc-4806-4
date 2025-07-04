@@ -6,7 +6,7 @@ class Reminder {
 
     }
 
-    public function get_all_reminders () {
+    public function get_all_reminders(): array {
         $db = db_connect();
         $statement = $db->prepare("select * from reminders;");
         $statement->execute();
@@ -14,8 +14,12 @@ class Reminder {
         return $rows;
     }
 
-    public function update_reminder ($reminder_id) {
+    public function update_reminder($reminder_id): int {
         $db = db_connect();
         //do update statement
+        $statement = $db->prepare("update reminders set complete = 1 where id = :id;");
+        $statement->bindValue(':id', $reminder_id);
+        $statement->execute();
+        return $statement->rowCount();
     }
 }
