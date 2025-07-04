@@ -13,8 +13,13 @@ class Reminder {
         $rows = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $rows;
     }
-     public function get_reminder($id): array|false {
-     }
+    public function get_reminder($id): array|false {
+        $db = db_connect();
+        $statement = $db->prepare("SELECT * FROM reminders WHERE id = :id;");
+        $statement->bindValue(':id', $id);
+        $statement->execute();
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }
      public function create_reminder($text): int{
          
      }
