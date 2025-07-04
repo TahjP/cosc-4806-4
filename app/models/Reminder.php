@@ -23,3 +23,5 @@ class Reminder {
         return $statement->rowCount();
     }
 }
+
+?>
