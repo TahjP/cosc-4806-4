@@ -20,21 +20,31 @@ class Reminder {
         $statement->execute();
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
-     public function create_reminder($text): int{
-         
-     }
-    
-    public function update_reminder($reminder_id): int {
+    public function create_reminder($text): int {
         $db = db_connect();
-        //do update statement
-        $statement = $db->prepare("update reminders set complete = 1 where id = :id;");
-        $statement->bindValue(':id', $reminder_id);
+        $statement = $db->prepare("INSERT INTO reminders (reminder, complete) VALUES (:reminder, 0);");
+        $statement->bindValue(':reminder', $text);
+        $statement->execute();
+        return (int)$db->lastInsertId();
+    }
+    
+    public function update_reminder($id, $text, $complete = 0): int {
+        $db = db_connect();
+        $statement = $db->prepare("UPDATE reminders SET reminder = :reminder, complete = :complete WHERE id = :id;");
+        $statement->execute([
+            ':reminder' => $text,
+            ':complete' => $complete,
+            ':id' => $id
+        ]);
+        return $statement->rowCount();
+    }
+    public function delete_reminder($id): int {
+        $db = db_connect();
+        $statement = $db->prepare("DELETE FROM reminders WHERE id = :id;");
+        $statement->bindValue(':id', $id);
         $statement->execute();
         return $statement->rowCount();
     }
-     public function delete_reminder($reminder_id): int{
-         
-     }
 }
 
 ?>
