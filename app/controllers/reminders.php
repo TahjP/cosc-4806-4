@@ -11,7 +11,12 @@ class Reminders extends Controller {
         $this->view('reminders/create');
     }
     public function store() {
-
+        $text = trim($_REQUEST['reminder'] ?? '');
+        if ($text !== '') {
+            $R = $this->model('Reminder');
+            $R->create_reminder($text);
+        }
+        header('Location: /reminders');
     }
     public function edit() {
         
