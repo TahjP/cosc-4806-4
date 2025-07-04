@@ -45,9 +45,10 @@ class User {
             // tpLog good attempt and reset session
             $log = $db->prepare("INSERT INTO log (username, attempt) VALUES (:username, 'good');");
             $log->execute(['username' => $username]);
-
+            $_SESSION['userid'] = $rows['userid']; 
             $_SESSION['auth'] = 1;
             $_SESSION['username'] = ucwords($username);
+            
             unset($_SESSION['failedAuth'], $_SESSION['lastFailed']);
 
             header('Location: /home');
