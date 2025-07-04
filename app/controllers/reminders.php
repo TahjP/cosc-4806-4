@@ -16,10 +16,15 @@ class Reminders extends Controller {
             $R->create_reminder($text);
         }
         header('Location: /reminders');
+        exit;
     }
     public function edit($id) {
         $R = $this->model('Reminder');
         $reminder = $R->get_reminder($id);
+        if (!$reminder) {
+            header('Location: /reminders');
+            exit;
+        }
         $this->view('reminders/edit', ['reminder' => $reminder]);
     }
     public function update($id) {
@@ -28,10 +33,12 @@ class Reminders extends Controller {
         $R = $this->model('Reminder');
         $R->update_reminder($id, $text, $complete);
         header('Location: /reminders');
+        exit;
     }
     public function delete($id) {
         $R = $this->model('Reminder');
         $R->delete_reminder($id);
         header('Location: /reminders');
+        exit;
     }
 }

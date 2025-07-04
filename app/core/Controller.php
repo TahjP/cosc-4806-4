@@ -7,8 +7,12 @@ class Controller {
         return new $model();
     }
     
-    public function view ($view, $data = []) {
-        require_once 'app/views/' . $view .'.php';
+    public function view($view, $data = []) {
+        // Make variables from the data array available to the view
+        if (is_array($data)) {
+            extract($data, EXTR_SKIP);
+        }
+        require_once 'app/views/' . $view . '.php';
     }
 
 }
