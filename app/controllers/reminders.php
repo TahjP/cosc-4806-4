@@ -2,11 +2,10 @@
 
 class Reminders extends Controller {
     public function index() {
-              $R = $this->model('Reminder');
-              $list_of_reminders = $R->get_all_reminders();
-              $this->view('reminders/index', ['reminders' => $list_of_reminders]);
-
-          }
+        $R = $this->model('Reminder');
+        $list = $R->get_all_reminders();
+        $this->view('reminders/index', ['reminders' => $list]);
+        }
     public function create() {
         $this->view('reminders/create');
     }
@@ -30,7 +29,9 @@ class Reminders extends Controller {
         $R->update_reminder($id, $text, $complete);
         header('Location: /reminders');
     }
-    public function delete(){
-        
+    public function delete($id) {
+        $R = $this->model('Reminder');
+        $R->delete_reminder($id);
+        header('Location: /reminders');
     }
 }
