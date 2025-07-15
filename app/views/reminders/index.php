@@ -14,7 +14,6 @@
             <tr>
                 <th>ID</th>
                 <th>Reminder</th>
-                <th>Complete</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -23,7 +22,7 @@
                 <tr>
                     <td><?= htmlspecialchars($rem['id']) ?></td>
                     <td><?= htmlspecialchars($rem['reminder'] ?? '') ?></td>
-                    <td><?= ($rem['complete'] ?? 0) ? 'Yes' : 'No' ?></td>
+                    <td><?= htmlspecialchars($rem['reminder'] ?? '') ?></td>
                     <td>
                         <a href="/reminders/edit/<?= $rem['id'] ?>" class="btn btn-sm btn-primary">Edit</a>
                         <a href="/reminders/delete/<?= $rem['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete this reminder?')">Delete</a>

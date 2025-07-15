@@ -22,18 +22,17 @@ class Reminder {
     }
     public function create_reminder($text): int {
         $db = db_connect();
-        $statement = $db->prepare("INSERT INTO reminders (reminder, complete) VALUES (:reminder, 0);");
+        $statement = $db->prepare("INSERT INTO reminders (reminder) VALUES (:reminder);");
         $statement->bindValue(':reminder', $text);
         $statement->execute();
         return (int)$db->lastInsertId();
     }
-    
+
     public function update_reminder($id, $text, $complete = 0): int {
         $db = db_connect();
-        $statement = $db->prepare("UPDATE reminders SET reminder = :reminder, complete = :complete WHERE id = :id;");
+        $statement = $db->prepare("UPDATE reminders SET reminder = :reminder WHERE id = :id;");
         $statement->execute([
             ':reminder' => $text,
-            ':complete' => $complete,
             ':id' => $id
         ]);
         return $statement->rowCount();

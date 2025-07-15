@@ -29,9 +29,8 @@ class Reminders extends Controller {
     }
     public function update($id) {
         $text = trim($_REQUEST['reminder'] ?? '');
-        $complete = isset($_REQUEST['complete']) ? 1 : 0;
         $R = $this->model('Reminder');
-        $R->update_reminder($id, $text, $complete);
+        $R->update_reminder($id, $text);
         header('Location: /reminders');
         exit;
     }
